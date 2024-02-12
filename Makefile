@@ -15,6 +15,8 @@ down:
 	docker-compose down
 stop:
 	docker-compose stop
+air:
+	docker-compose exec app air -c .air.toml
 
 
 .PHONY: build
