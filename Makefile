@@ -17,6 +17,8 @@ stop:
 	docker-compose stop
 air:
 	docker-compose exec app air -c .air.toml
+dlv:
+	docker-compose exec app dlv debug ./cmd/main.go
 
 
 .PHONY: build
