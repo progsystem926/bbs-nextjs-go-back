@@ -23,10 +23,16 @@ down:
 	docker-compose down
 stop:
 	docker-compose stop
+gqlgen:
+	docker-compose exec app go run github.com/99designs/gqlgen generate
 air:
 	docker-compose exec app air -c .air.toml
 dlv:
 	docker-compose exec app dlv debug ./cmd/main.go
+dry-fix:
+	golangci-lint run ./...
+fix:
+	golangci-lint run --fix
 
 
 .PHONY: build
