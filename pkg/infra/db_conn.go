@@ -3,9 +3,8 @@ package infra
 import (
 	"fmt"
 
-	"golang.org/x/xerrors"
-
 	"github.com/progsystem926/bbs-nextjs-go-back/pkg/lib/config"
+	"golang.org/x/xerrors"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
