@@ -1,10 +1,9 @@
 package infra
 
 import (
-	"golang.org/x/xerrors"
-
 	"github.com/progsystem926/bbs-nextjs-go-back/pkg/domain/model"
 	"github.com/progsystem926/bbs-nextjs-go-back/pkg/domain/repository"
+	"golang.org/x/xerrors"
 	"gorm.io/gorm"
 )
 

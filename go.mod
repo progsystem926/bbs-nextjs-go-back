@@ -5,6 +5,7 @@ go 1.21.7
 require (
 	github.com/99designs/gqlgen v0.17.43
 	github.com/caarlos0/env/v6 v6.10.1
+	github.com/getsentry/sentry-go v0.27.0
 	github.com/vektah/gqlparser/v2 v2.5.11
 	golang.org/x/xerrors v0.0.0-20231012003039-104605ab7028
 	gorm.io/driver/mysql v1.5.4
@@ -18,4 +19,6 @@ require (
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/sosodev/duration v1.2.0 // indirect
+	golang.org/x/sys v0.13.0 // indirect
+	golang.org/x/text v0.13.0 // indirect
 )
