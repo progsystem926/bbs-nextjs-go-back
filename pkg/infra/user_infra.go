@@ -35,6 +35,14 @@ func (r *userRepository) GetUserByEmail(email string) (*graph.User, error) {
 	return user, nil
 }
 
+func (r *userRepository) CreateUser(user *graph.User) (*graph.User, error) {
+	if result := r.db.Create(user); result.Error != nil {
+		return nil, xerrors.Errorf("repository CreateUser() err %w", result.Error)
+	}
+
+	return user, nil
+}
+
 func (r *userRepository) Encrypt(plain string) (string, error) {
 	var enc string
 	err := r.db.Raw("SELECT HEX(AES_ENCRYPT(?, ?))", plain, r.config.EncryptKey).Scan(&enc).Error
