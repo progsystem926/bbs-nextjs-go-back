@@ -13,6 +13,7 @@ type Config struct {
 	DBPass     string `env:"API_DB_PASS" envDefault:"pass"`
 	DBPort     string `env:"API_DB_PORT" envDefault:"3306"`
 	EncryptKey string `env:"API_ENCRYPT_KEY" envDefault:"passwordpassword"`
+	JwtSecret  string `env:"API_JWT_SECRET" envDefault:"secret"`
 	SentryDsn  string `env:"API_SENTRY_DSN" envDefault:"https://xxxxxxxx"`
 }
 
