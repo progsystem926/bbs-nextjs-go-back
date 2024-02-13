@@ -6,7 +6,10 @@ import (
 )
 
 type Config struct {
+	AppDomain  string `env:"API_APP_DOMAIN" envDefault:""`
 	Env        string `env:"API_ENV" envDefault:"dev"`
+	Port       string `env:"API_PORT" envDefault:"8080"`
+	FrontURL   string `env:"API_FRONT_URL" envDefault:"https://localhost:3443"`
 	DBHost     string `env:"API_DB_HOST" envDefault:"172.30.0.3"`
 	DBName     string `env:"API_DB_NAME" envDefault:"golang"`
 	DBUser     string `env:"API_DB_USER" envDefault:"root"`
