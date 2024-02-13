@@ -8,6 +8,7 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/getsentry/sentry-go"
 	"github.com/progsystem926/bbs-nextjs-go-back/pkg/domain/model"
 	"github.com/progsystem926/bbs-nextjs-go-back/pkg/domain/model/graph"
 	"github.com/progsystem926/bbs-nextjs-go-back/pkg/lib/graph/generated"
@@ -15,7 +16,16 @@ import (
 
 // User is the resolver for the user field.
 func (r *postResolver) User(ctx context.Context, obj *model.Post) (*graph.User, error) {
-	panic(fmt.Errorf("not implemented: User - user"))
+	if obj.UserID == "" {
+		return nil, nil
+	}
+	user, err := r.UserUseCase.GetUserById(obj.UserID)
+	if err != nil {
+		err = fmt.Errorf("resolver User() err %w", err)
+		sentry.CaptureException(err)
+		return nil, err
+	}
+	return user, nil
 }
 
 // Post returns generated.PostResolver implementation.
