@@ -8,13 +8,21 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/getsentry/sentry-go"
 	"github.com/progsystem926/bbs-nextjs-go-back/pkg/domain/model"
 	"github.com/progsystem926/bbs-nextjs-go-back/pkg/lib/graph/generated"
 )
 
 // GetPosts is the resolver for the getPosts field.
 func (r *queryResolver) GetPosts(ctx context.Context) ([]*model.Post, error) {
-	panic(fmt.Errorf("not implemented: GetPosts - getPosts"))
+	posts, err := r.PostUseCase.GetPosts()
+	if err != nil {
+		err = fmt.Errorf("resolver GetPosts() err %w", err)
+		sentry.CaptureException(err)
+		return nil, err
+	}
+
+	return posts, nil
 }
 
 // Query returns generated.QueryResolver implementation.

@@ -7,7 +7,9 @@ package resolver
 import (
 	"context"
 	"fmt"
+	"html"
 
+	"github.com/getsentry/sentry-go"
 	"github.com/progsystem926/bbs-nextjs-go-back/pkg/domain/model"
 	"github.com/progsystem926/bbs-nextjs-go-back/pkg/domain/model/graph"
 	"github.com/progsystem926/bbs-nextjs-go-back/pkg/lib/graph/generated"
@@ -15,12 +17,30 @@ import (
 
 // CreatePost is the resolver for the createPost field.
 func (r *mutationResolver) CreatePost(ctx context.Context, input graph.NewPost) (*model.Post, error) {
-	panic(fmt.Errorf("not implemented: CreatePost - createPost"))
+	escapedText := html.EscapeString(input.Text)
+	created, err := r.PostUseCase.CreatePost(&escapedText, &input.UserID)
+	if err != nil {
+		err = fmt.Errorf("resolver CreatePost() err %w", err)
+		sentry.CaptureException(err)
+		return nil, err
+	}
+
+	return created, nil
 }
 
 // CreateUser is the resolver for the createUser field.
 func (r *mutationResolver) CreateUser(ctx context.Context, input graph.NewUser) (*graph.User, error) {
-	panic(fmt.Errorf("not implemented: CreateUser - createUser"))
+	escapedName := html.EscapeString(input.Name)
+	escapedEmail := html.EscapeString(input.Email)
+	escapedPassword := html.EscapeString(input.Password)
+	created, err := r.UserUseCase.CreateUser(&escapedName, &escapedEmail, &escapedPassword)
+	if err != nil {
+		err = fmt.Errorf("resolver CreateUser() err %w", err)
+		sentry.CaptureException(err)
+		return nil, err
+	}
+
+	return created, nil
 }
 
 // Mutation returns generated.MutationResolver implementation.
