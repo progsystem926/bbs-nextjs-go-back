@@ -1,0 +1,3 @@
+{
+    "query": "query { getPosts { id text created_at user { name } } }"
+}
