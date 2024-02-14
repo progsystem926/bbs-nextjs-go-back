@@ -8,6 +8,7 @@ require (
 	github.com/getsentry/sentry-go v0.27.0
 	github.com/go-playground/validator v9.31.0+incompatible
 	github.com/golang-jwt/jwt/v4 v4.5.0
+	github.com/golang/mock v1.6.0
 	github.com/labstack/echo/v4 v4.10.0
 	github.com/vektah/gqlparser/v2 v2.5.11
 	golang.org/x/xerrors v0.0.0-20231012003039-104605ab7028
