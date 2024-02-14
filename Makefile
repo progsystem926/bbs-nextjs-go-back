@@ -27,8 +27,10 @@ gqlgen:
 	docker-compose exec app go run github.com/99designs/gqlgen generate
 air:
 	docker-compose exec app air -c .air.toml
-dlv:
+app-dlv:
 	docker-compose exec app dlv debug ./cmd/main.go
+dlv:
+	docker-compose exec app dlv debug ./cmd/main.go --headless --listen=:2345 --api-version=2 --accept-multiclient
 dry-fix:
 	golangci-lint run ./...
 fix:
