@@ -17,6 +17,8 @@ roll-back:
 	docker-compose exec app goose -dir ./build/db/migration mysql "$(API_DB_USER):$(API_DB_PASS)@tcp(mysql:$(API_DB_PORT))/$(API_DB_NAME)" reset
 create-migration: # ファイル名は適宜変更すること
 	docker-compose exec app goose -dir ./build/db/migration create insert_users sql
+create-mock: # ファイル名は適宜変更すること
+	docker-compose exec app mockgen -source=pkg/domain/repository/user_repository.go -destination pkg/lib/mock/mock_user.go
 start:
 	docker-compose exec app go run ./cmd/main.go
 down:
