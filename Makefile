@@ -37,6 +37,8 @@ dry-fix:
 	golangci-lint run ./...
 fix:
 	golangci-lint run --fix
+test:
+	go test ./... -coverprofile=coverage.out
 
 
 .PHONY: build
