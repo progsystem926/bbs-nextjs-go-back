@@ -46,6 +46,10 @@ func (i *InitRouter) InitRouting(cfg *config.Config) (*echo.Echo, error) {
 		middleware.CORSWithConfig(middleware.CORSConfig{
 			AllowOrigins:     []string{cfg.FrontURL},
 			AllowCredentials: true,
+			AllowHeaders: []string{
+				echo.HeaderContentType,
+				echo.HeaderXCSRFToken,
+			},
 		}),
 		middleware.CSRFWithConfig(middleware.CSRFConfig{
 			CookiePath:     "/",
