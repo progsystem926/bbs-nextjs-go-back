@@ -7,7 +7,7 @@ CREATE TABLE users (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 CREATE INDEX user_id on users (id);
 
-SET @encryption_key = '${API_ENCRYPT_KEY}';
+SET @encryption_key = 'passwordpassword';
 INSERT INTO users (name, email, password)
 VALUES
     ('user1', HEX(AES_ENCRYPT('test1@example.com', @encryption_key)), HEX(AES_ENCRYPT('password1', @encryption_key))),
