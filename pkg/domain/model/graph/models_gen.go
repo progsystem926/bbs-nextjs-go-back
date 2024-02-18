@@ -7,7 +7,7 @@ type Mutation struct {
 
 type NewPost struct {
 	Text   string `json:"text"`
-	UserID string `json:"userId"`
+	UserID int    `json:"userId"`
 }
 
 type NewUser struct {
@@ -17,11 +17,4 @@ type NewUser struct {
 }
 
 type Query struct {
-}
-
-type User struct {
-	ID       string `json:"id"`
-	Name     string `json:"name"`
-	Email    string `json:"email"`
-	Password string `json:"password"`
 }

@@ -1,8 +1,8 @@
 package model
 
 type Post struct {
-	ID        string `json:"id"`
+	ID        int    `json:"id" gorm:"primaryKey;autoIncrement"`
 	Text      string `json:"text"`
-	UserID    string `json:"user_id"`
+	UserID    int    `json:"user_id"`
 	CreatedAt string `json:"created_at"`
 }

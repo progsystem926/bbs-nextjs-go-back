@@ -1,6 +1,6 @@
 input NewPost {
   text: String!
-  userId: String!
+  userId: Int!
 }
 
 input NewUser {

@@ -1,7 +1,7 @@
 package infra
 
 import (
-	"github.com/progsystem926/bbs-nextjs-go-back/pkg/domain/model/graph"
+	"github.com/progsystem926/bbs-nextjs-go-back/pkg/domain/model"
 	"github.com/progsystem926/bbs-nextjs-go-back/pkg/domain/repository"
 	"github.com/progsystem926/bbs-nextjs-go-back/pkg/lib/config"
 	"golang.org/x/xerrors"
@@ -17,8 +17,8 @@ func NewUserRepository(db *gorm.DB, config *config.Config) repository.User {
 	return &userRepository{db, config}
 }
 
-func (r *userRepository) GetUserById(id string) (*graph.User, error) {
-	var user *graph.User
+func (r *userRepository) GetUserById(id int) (*model.User, error) {
+	var user *model.User
 	if err := r.db.Where("id = ?", id).First(&user).Error; err != nil {
 		return nil, xerrors.Errorf("get users by id failed , %w", err)
 	}
@@ -26,8 +26,8 @@ func (r *userRepository) GetUserById(id string) (*graph.User, error) {
 	return user, nil
 }
 
-func (r *userRepository) GetUserByEmail(email string) (*graph.User, error) {
-	var user *graph.User
+func (r *userRepository) GetUserByEmail(email string) (*model.User, error) {
+	var user *model.User
 	if err := r.db.Where("email =?", email).First(&user).Error; err != nil {
 		return nil, xerrors.Errorf("get users by email failed, %w", err)
 	}
@@ -35,7 +35,7 @@ func (r *userRepository) GetUserByEmail(email string) (*graph.User, error) {
 	return user, nil
 }
 
-func (r *userRepository) CreateUser(user *graph.User) (*graph.User, error) {
+func (r *userRepository) CreateUser(user *model.User) (*model.User, error) {
 	if result := r.db.Create(user); result.Error != nil {
 		return nil, xerrors.Errorf("repository CreateUser() err %w", result.Error)
 	}
