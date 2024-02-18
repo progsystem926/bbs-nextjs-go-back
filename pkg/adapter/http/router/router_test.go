@@ -21,7 +21,7 @@ func TestQueryRouter(t *testing.T) {
 	defer ctrlPost.Finish()
 	mpr := repository.NewMockPost(ctrlPost)
 	pRes := []*model.Post{
-		{ID: 1, Text: "testPost1", UserID: "1", CreatedAt: ""},
+		{ID: 1, Text: "testPost1", UserID: 1, CreatedAt: ""},
 	}
 	mpr.EXPECT().GetPosts().Return(pRes, nil)
 
@@ -34,7 +34,7 @@ func TestQueryRouter(t *testing.T) {
 		Email:    "testUser1@example.com",
 		Password: "testUser1password",
 	}
-	mur.EXPECT().GetUserById("1").Return(uRes, nil)
+	mur.EXPECT().GetUserById(1).Return(uRes, nil)
 
 	pu := usecase.NewPostUseCase(mpr)
 	uu := usecase.NewUserUseCase(mur)

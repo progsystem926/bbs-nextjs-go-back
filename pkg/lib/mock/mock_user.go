@@ -8,7 +8,7 @@ import (
 	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
-	graph "github.com/progsystem926/bbs-nextjs-go-back/pkg/domain/model/graph"
+	model "github.com/progsystem926/bbs-nextjs-go-back/pkg/domain/model"
 )
 
 // MockUser is a mock of User interface.
@@ -35,10 +35,10 @@ func (m *MockUser) EXPECT() *MockUserMockRecorder {
 }
 
 // CreateUser mocks base method.
-func (m *MockUser) CreateUser(user *graph.User) (*graph.User, error) {
+func (m *MockUser) CreateUser(user *model.User) (*model.User, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CreateUser", user)
-	ret0, _ := ret[0].(*graph.User)
+	ret0, _ := ret[0].(*model.User)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -80,10 +80,10 @@ func (mr *MockUserMockRecorder) Encrypt(plain interface{}) *gomock.Call {
 }
 
 // GetUserByEmail mocks base method.
-func (m *MockUser) GetUserByEmail(email string) (*graph.User, error) {
+func (m *MockUser) GetUserByEmail(email string) (*model.User, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetUserByEmail", email)
-	ret0, _ := ret[0].(*graph.User)
+	ret0, _ := ret[0].(*model.User)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -95,10 +95,10 @@ func (mr *MockUserMockRecorder) GetUserByEmail(email interface{}) *gomock.Call {
 }
 
 // GetUserById mocks base method.
-func (m *MockUser) GetUserById(id string) (*graph.User, error) {
+func (m *MockUser) GetUserById(id int) (*model.User, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetUserById", id)
-	ret0, _ := ret[0].(*graph.User)
+	ret0, _ := ret[0].(*model.User)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
