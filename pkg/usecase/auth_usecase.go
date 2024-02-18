@@ -13,9 +13,9 @@ import (
 )
 
 type Auth interface {
-	Login(c echo.Context, fv *FormValue) (string, error)
+	Login(c echo.Context, fv *FormValue) (int, error)
 	JwtParser(auth string) (*jwt.MapClaims, error)
-	IdentifyJwtUser(id string) error
+	IdentifyJwtUser(id int) error
 	DeleteCookie(c echo.Context, ck *http.Cookie)
 }
 
@@ -30,7 +30,7 @@ type FormValue struct {
 }
 
 type jwtCustomClaims struct {
-	UserId string `json:"user_id"`
+	UserId int `json:"user_id"`
 	jwt.RegisteredClaims
 }
 
@@ -63,24 +63,24 @@ func (a *AuthUseCase) JwtParser(auth string) (*jwt.MapClaims, error) {
 	return &claims, nil
 }
 
-func (a *AuthUseCase) Login(c echo.Context, fv *FormValue) (string, error) {
+func (a *AuthUseCase) Login(c echo.Context, fv *FormValue) (int, error) {
 	encEmail, err := a.userRepo.Encrypt(fv.Email)
 	if err != nil {
-		return "", fmt.Errorf("login failed at Encrypt err %w", err)
+		return 0, fmt.Errorf("login failed at Encrypt err %w", err)
 	}
 
 	user, err := a.userRepo.GetUserByEmail(encEmail)
 	if err != nil {
-		return "", fmt.Errorf("login failed at GetUserByEmail err %w", err)
+		return 0, fmt.Errorf("login failed at GetUserByEmail err %w", err)
 	}
 
 	pass, err := a.userRepo.Decrypt(user.Password)
 	if err != nil {
-		return "", fmt.Errorf("login failed at Decrypt err %w", err)
+		return 0, fmt.Errorf("login failed at Decrypt err %w", err)
 	}
 
 	if pass != fv.Password {
-		return "", fmt.Errorf("login failed at compare pass err %w", err)
+		return 0, fmt.Errorf("login failed at compare pass err %w", err)
 	}
 
 	claims := &jwtCustomClaims{
@@ -93,13 +93,13 @@ func (a *AuthUseCase) Login(c echo.Context, fv *FormValue) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	t, err := token.SignedString([]byte(a.config.JwtSecret))
 	if err != nil {
-		return "", xerrors.Errorf("login failed at NewWithClaims err %w", err)
+		return 0, xerrors.Errorf("login failed at NewWithClaims err %w", err)
 	}
 
 	time.Local = time.FixedZone("Local", 9*60*60)
 	jst, err := time.LoadLocation("Local")
 	if err != nil {
-		return "", xerrors.Errorf("login failed at LoadLocation err %w", err)
+		return 0, xerrors.Errorf("login failed at LoadLocation err %w", err)
 	}
 	nowJST := time.Now().In(jst)
 
@@ -116,7 +116,7 @@ func (a *AuthUseCase) Login(c echo.Context, fv *FormValue) (string, error) {
 	return user.ID, nil
 }
 
-func (a *AuthUseCase) IdentifyJwtUser(id string) error {
+func (a *AuthUseCase) IdentifyJwtUser(id int) error {
 	_, err := a.userRepo.GetUserById(id)
 	if err != nil {
 		return fmt.Errorf("IdentifyJwtUser err %w", err)

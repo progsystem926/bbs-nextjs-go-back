@@ -10,7 +10,7 @@ import (
 
 type Post interface {
 	GetPosts() ([]*model.Post, error)
-	CreatePost(text *string, userId *string) (*model.Post, error)
+	CreatePost(text *string, userId int) (*model.Post, error)
 }
 
 type PostUseCase struct {
@@ -31,12 +31,14 @@ func (p *PostUseCase) GetPosts() ([]*model.Post, error) {
 	return posts, nil
 }
 
-func (p *PostUseCase) CreatePost(text *string, userId *string) (*model.Post, error) {
-	timestamp := time.Now().Format("2024-01-01 01:01:01")
+func (p *PostUseCase) CreatePost(text *string, userId int) (*model.Post, error) {
+	timestamp := time.Now().Format(time.DateTime)
+	fmt.Println("time now:", time.Now())
+	fmt.Println("timestamp:", timestamp)
 
 	post := model.Post{
 		Text:      *text,
-		UserID:    *userId,
+		UserID:    userId,
 		CreatedAt: timestamp,
 	}
 

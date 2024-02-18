@@ -45,7 +45,7 @@ func (a *AuthMiddleware) AuthMiddleware(next echo.HandlerFunc) echo.HandlerFunc 
 		}
 
 		var cl = *claims
-		uId := cl["user_id"].(string)
+		uId := int(cl["user_id"].(float64))
 		if err := a.AuthUseCase.IdentifyJwtUser(uId); err != nil {
 			a.AuthUseCase.DeleteCookie(c, cookie)
 			return fmt.Errorf("failed to personal authentication: %w", err)
