@@ -2,7 +2,7 @@
     "data": {
         "getPosts": [
             {
-                "id": "1",
+                "id": 1,
                 "text": "testPost1",
                 "created_at": "",
                 "user": {
