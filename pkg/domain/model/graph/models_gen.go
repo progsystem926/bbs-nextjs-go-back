@@ -2,6 +2,10 @@
 
 package graph
 
+type DeletePost struct {
+	ID int `json:"id"`
+}
+
 type Mutation struct {
 }
 

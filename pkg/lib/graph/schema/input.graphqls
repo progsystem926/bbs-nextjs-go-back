@@ -8,3 +8,7 @@ input NewUser {
   email: String!
   password: String!
 }
+
+input DeletePost {
+  id: Int!
+}

@@ -11,6 +11,7 @@ import (
 type Post interface {
 	GetPosts() ([]*model.Post, error)
 	CreatePost(text *string, userId int) (*model.Post, error)
+	DeletePost(id int) (bool, error)
 }
 
 type PostUseCase struct {
@@ -48,4 +49,13 @@ func (p *PostUseCase) CreatePost(text *string, userId int) (*model.Post, error) 
 	}
 
 	return created, nil
+}
+
+func (p *PostUseCase) DeletePost(id int) (bool, error) {
+	deleted, err := p.postRepo.DeletePost(&model.Post{ID: id})
+	if err != nil {
+		return false, fmt.Errorf("useCase DeletePost() err: %w", err)
+	}
+
+	return deleted, nil
 }

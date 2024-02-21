@@ -1,4 +1,5 @@
 type Mutation {
   createPost(input: NewPost!): Post!
   createUser(input: NewUser!): User!
+  deletePost(input: DeletePost!): Boolean!
 }
