@@ -43,6 +43,18 @@ func (r *mutationResolver) CreateUser(ctx context.Context, input graph.NewUser) 
 	return created, nil
 }
 
+// DeletePost is the resolver for the deletePost field.
+func (r *mutationResolver) DeletePost(ctx context.Context, input graph.DeletePost) (bool, error) {
+	deleted, err := r.PostUseCase.DeletePost(input.ID)
+	if err != nil {
+		err = fmt.Errorf("resolver DeletePost() err %w", err)
+		sentry.CaptureException(err)
+		return false, err
+	}
+
+	return deleted, nil
+}
+
 // Mutation returns generated.MutationResolver implementation.
 func (r *Resolver) Mutation() generated.MutationResolver { return &mutationResolver{r} }
 

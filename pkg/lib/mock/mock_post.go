@@ -49,6 +49,21 @@ func (mr *MockPostMockRecorder) CreatePost(post interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreatePost", reflect.TypeOf((*MockPost)(nil).CreatePost), post)
 }
 
+// DeletePost mocks base method.
+func (m *MockPost) DeletePost(post *model.Post) (bool, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeletePost", post)
+	ret0, _ := ret[0].(bool)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DeletePost indicates an expected call of DeletePost.
+func (mr *MockPostMockRecorder) DeletePost(post interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeletePost", reflect.TypeOf((*MockPost)(nil).DeletePost), post)
+}
+
 // GetPosts mocks base method.
 func (m *MockPost) GetPosts() ([]*model.Post, error) {
 	m.ctrl.T.Helper()

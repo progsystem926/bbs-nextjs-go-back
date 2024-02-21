@@ -37,3 +37,11 @@ func (r *postRepository) CreatePost(post *model.Post) (*model.Post, error) {
 
 	return post, nil
 }
+
+func (r *postRepository) DeletePost(post *model.Post) (bool, error) {
+	if result := r.db.Delete(post); result.Error != nil {
+		return false, xerrors.Errorf("repository DeletePost() err %w", result.Error)
+	}
+
+	return true, nil
+}
