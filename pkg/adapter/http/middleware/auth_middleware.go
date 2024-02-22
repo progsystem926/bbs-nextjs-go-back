@@ -26,9 +26,11 @@ func NewAuthMiddleware(au usecase.Auth) Auth {
 
 func (a *AuthMiddleware) AuthMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) (err error) {
-		if a.isSkippedPath(c.Request().URL.Path, c.Request().Referer()) {
+		req := c.Request()
+
+		if a.isSkippedPath(req.URL.Path, req.Referer()) {
 			if err := next(c); err != nil {
-				return xerrors.Errorf("AuthMiddleware error path: %s: %w", c.Request().URL.Path, err)
+				return xerrors.Errorf("AuthMiddleware error path: %s: %w", req.URL.Path, err)
 			}
 			return nil
 		}
@@ -60,7 +62,7 @@ func (a *AuthMiddleware) AuthMiddleware(next echo.HandlerFunc) echo.HandlerFunc 
 }
 
 func (a *AuthMiddleware) isSkippedPath(reqPath, refPath string) bool {
-	skippedPaths := []string{"/healthcheck", "csrf-cookie", "/login", "logout", "playground"}
+	skippedPaths := []string{"/healthcheck", "csrf-cookie", "/login", "/logout", "/playground", "/signup"}
 	for _, path := range skippedPaths {
 		if strings.Contains(reqPath, path) || strings.Contains(refPath, path) {
 			return true

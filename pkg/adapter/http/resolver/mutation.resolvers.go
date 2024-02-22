@@ -28,21 +28,6 @@ func (r *mutationResolver) CreatePost(ctx context.Context, input graph.NewPost) 
 	return created, nil
 }
 
-// CreateUser is the resolver for the createUser field.
-func (r *mutationResolver) CreateUser(ctx context.Context, input graph.NewUser) (*model.User, error) {
-	escapedName := html.EscapeString(input.Name)
-	escapedEmail := html.EscapeString(input.Email)
-	escapedPassword := html.EscapeString(input.Password)
-	created, err := r.UserUseCase.CreateUser(&escapedName, &escapedEmail, &escapedPassword)
-	if err != nil {
-		err = fmt.Errorf("resolver CreateUser() err %w", err)
-		sentry.CaptureException(err)
-		return nil, err
-	}
-
-	return created, nil
-}
-
 // DeletePost is the resolver for the deletePost field.
 func (r *mutationResolver) DeletePost(ctx context.Context, input graph.DeletePost) (bool, error) {
 	deleted, err := r.PostUseCase.DeletePost(input.ID)

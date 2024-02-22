@@ -35,15 +35,16 @@ func main() {
 	ur := infra.NewUserRepository(db, c)
 	au := usecase.NewAuthUseCase(ur, c)
 	mu := usecase.NewPostUseCase(mr)
-	uu := usecase.NewUserUseCase(ur)
+	uu := usecase.NewUserUseCase(ur, c)
 	ch := handler.NewCsrfHandler()
 	lh := handler.NewLoginHandler(au)
 	gh := handler.NewGraphHandler(mu, uu)
+	sh := handler.NewSignUpHandler(uu)
 	ph := playground.Handler("GraphQL", "/query")
 	am := authMiddleware.NewAuthMiddleware(au)
 
 	// Rooting
-	r := router.NewInitRouter(ch, lh, gh, ph, am)
+	r := router.NewInitRouter(ch, lh, gh, sh, ph, am)
 	_, err = r.InitRouting(c)
 	if err != nil {
 		sentry.CaptureException(fmt.Errorf("InitRouting at NewInitRoute err: %w", err))

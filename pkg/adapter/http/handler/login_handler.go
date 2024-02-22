@@ -27,7 +27,7 @@ func NewLoginHandler(au usecase.Auth) Login {
 
 func (l *LoginHandler) LoginHandler() echo.HandlerFunc {
 	return func(c echo.Context) (err error) {
-		var fv = &usecase.FormValue{
+		var fv = &usecase.LoginFormValue{
 			Email:    c.FormValue("email"),
 			Password: c.FormValue("password"),
 		}

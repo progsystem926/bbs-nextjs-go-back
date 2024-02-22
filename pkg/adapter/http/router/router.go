@@ -23,12 +23,13 @@ type InitRouter struct {
 	Ch handler.Csrf
 	Lh handler.Login
 	Gh handler.Graph
+	Sh handler.SignUp
 	Ph http.HandlerFunc
 	Am authMiddleware.Auth
 }
 
-func NewInitRouter(ch handler.Csrf, lh handler.Login, gh handler.Graph, ph http.HandlerFunc, am authMiddleware.Auth) Router {
-	InitRouter := InitRouter{ch, lh, gh, ph, am}
+func NewInitRouter(ch handler.Csrf, lh handler.Login, gh handler.Graph, sh handler.SignUp, ph http.HandlerFunc, am authMiddleware.Auth) Router {
+	InitRouter := InitRouter{ch, lh, gh, sh, ph, am}
 	return &InitRouter
 }
 
@@ -82,6 +83,7 @@ func (i *InitRouter) InitRouting(cfg *config.Config) (*echo.Echo, error) {
 	e.GET("/csrf-cookie", i.Ch.CsrfHandler())
 	e.POST("/login", i.Lh.LoginHandler())
 	e.GET("/logout", i.Lh.LogoutHandler())
+	e.POST("/signup", i.Sh.SignUpHandler())
 	e.POST("/query", i.Gh.QueryHandler())
 	e.GET("/playground", func(c echo.Context) error {
 		i.Ph.ServeHTTP(c.Response(), c.Request())

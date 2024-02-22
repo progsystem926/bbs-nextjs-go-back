@@ -7,7 +7,7 @@ import (
 type User interface {
 	GetUserById(id int) (*model.User, error)
 	GetUserByEmail(email string) (*model.User, error)
-	CreateUser(user *model.User) (*model.User, error)
 	Encrypt(plain string) (string, error)
 	Decrypt(encrypted string) (string, error)
+	CreateUser(user *model.User) (*model.User, error)
 }

@@ -11,6 +11,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/progsystem926/bbs-nextjs-go-back/pkg/adapter/http/handler"
 	"github.com/progsystem926/bbs-nextjs-go-back/pkg/domain/model"
+	"github.com/progsystem926/bbs-nextjs-go-back/pkg/lib/config"
 	repository "github.com/progsystem926/bbs-nextjs-go-back/pkg/lib/mock"
 	"github.com/progsystem926/bbs-nextjs-go-back/pkg/usecase"
 	"github.com/stretchr/testify/assert"
@@ -37,7 +38,7 @@ func TestQueryRouter(t *testing.T) {
 	mur.EXPECT().GetUserById(1).Return(uRes, nil)
 
 	pu := usecase.NewPostUseCase(mpr)
-	uu := usecase.NewUserUseCase(mur)
+	uu := usecase.NewUserUseCase(mur, &config.Config{})
 	gh := handler.NewGraphHandler(pu, uu)
 
 	e := echo.New()
