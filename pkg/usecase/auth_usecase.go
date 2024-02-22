@@ -13,7 +13,7 @@ import (
 )
 
 type Auth interface {
-	Login(c echo.Context, fv *FormValue) (int, error)
+	Login(c echo.Context, fv *LoginFormValue) (int, error)
 	JwtParser(auth string) (*jwt.MapClaims, error)
 	IdentifyJwtUser(id int) error
 	DeleteCookie(c echo.Context, ck *http.Cookie)
@@ -24,7 +24,7 @@ type AuthUseCase struct {
 	userRepo repository.User
 }
 
-type FormValue struct {
+type LoginFormValue struct {
 	Email    string `json:"email" validate:"required,email"`
 	Password string `json:"password" validate:"required"`
 }
@@ -63,7 +63,7 @@ func (a *AuthUseCase) JwtParser(auth string) (*jwt.MapClaims, error) {
 	return &claims, nil
 }
 
-func (a *AuthUseCase) Login(c echo.Context, fv *FormValue) (int, error) {
+func (a *AuthUseCase) Login(c echo.Context, fv *LoginFormValue) (int, error) {
 	encEmail, err := a.userRepo.Encrypt(fv.Email)
 	if err != nil {
 		return 0, fmt.Errorf("login failed at Encrypt err %w", err)

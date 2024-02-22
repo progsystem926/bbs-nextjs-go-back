@@ -3,12 +3,6 @@ input NewPost {
   userId: Int!
 }
 
-input NewUser {
-  name: String!
-  email: String!
-  password: String!
-}
-
 input DeletePost {
   id: Int!
 }
