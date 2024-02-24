@@ -17,7 +17,7 @@ func NewPostRepository(db *gorm.DB) repository.Post {
 
 func (r *postRepository) GetPosts() ([]*model.Post, error) {
 	var records []model.Post
-	if result := r.db.Find(&records); result.Error != nil {
+	if result := r.db.Order("created_at desc").Find(&records); result.Error != nil {
 		return nil, xerrors.Errorf("repository GetMessages() err %w", result.Error)
 	}
 
