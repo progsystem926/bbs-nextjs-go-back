@@ -34,8 +34,6 @@ func (p *PostUseCase) GetPosts() ([]*model.Post, error) {
 
 func (p *PostUseCase) CreatePost(text *string, userId int) (*model.Post, error) {
 	timestamp := time.Now().Format(time.DateTime)
-	fmt.Println("time now:", time.Now())
-	fmt.Println("timestamp:", timestamp)
 
 	post := model.Post{
 		Text:      *text,
