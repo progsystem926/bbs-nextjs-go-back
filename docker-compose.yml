@@ -4,6 +4,7 @@ services:
     container_name: app
     build:
       context: .
+      target: runner
       dockerfile: ./build/docker/go/Dockerfile
     tty: true
     ports:
