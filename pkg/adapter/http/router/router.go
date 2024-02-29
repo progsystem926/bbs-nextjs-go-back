@@ -38,7 +38,7 @@ func (i *InitRouter) InitRouting(cfg *config.Config) (*echo.Echo, error) {
 
 	cookieDomain := ""
 	if cfg.Env == "prd" {
-		cookieDomain = "." + cfg.AppDomain
+		cookieDomain = cfg.AppDomain
 	}
 
 	e.Use(
