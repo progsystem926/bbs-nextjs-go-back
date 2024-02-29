@@ -3,7 +3,6 @@ package router
 import (
 	"fmt"
 	"net/http"
-	"strings"
 
 	"github.com/getsentry/sentry-go"
 	"github.com/labstack/echo/v4"
@@ -36,10 +35,10 @@ func NewInitRouter(ch handler.Csrf, lh handler.Login, gh handler.Graph, sh handl
 func (i *InitRouter) InitRouting(cfg *config.Config) (*echo.Echo, error) {
 	e := echo.New()
 
-	cookieDomain := ""
-	if cfg.Env == "prd" {
-		cookieDomain = cfg.AppDomain
-	}
+	// cookieDomain := ""
+	// if cfg.Env == "prd" {
+	// 	cookieDomain = cfg.AppDomain
+	// }
 
 	e.Use(
 		middleware.Logger(),
@@ -52,24 +51,24 @@ func (i *InitRouter) InitRouting(cfg *config.Config) (*echo.Echo, error) {
 				echo.HeaderXCSRFToken,
 			},
 		}),
-		middleware.CSRFWithConfig(middleware.CSRFConfig{
-			CookiePath:     "/",
-			CookieSecure:   true,
-			CookieDomain:   cookieDomain,
-			CookieSameSite: http.SameSiteNoneMode,
-			Skipper: func(c echo.Context) bool {
-				if strings.Contains(c.Request().URL.Path, "/healthcheck") {
-					return true
-				}
-				if strings.Contains(c.Request().URL.Path, "/playground") {
-					return true
-				}
-				if strings.Contains(c.Request().URL.Path, "/query") {
-					return true
-				}
-				return false
-			},
-		}),
+		// middleware.CSRFWithConfig(middleware.CSRFConfig{
+		// 	CookiePath:     "/",
+		// 	CookieSecure:   true,
+		// 	CookieDomain:   cookieDomain,
+		// 	CookieSameSite: http.SameSiteNoneMode,
+		// 	Skipper: func(c echo.Context) bool {
+		// 		if strings.Contains(c.Request().URL.Path, "/healthcheck") {
+		// 			return true
+		// 		}
+		// 		if strings.Contains(c.Request().URL.Path, "/playground") {
+		// 			return true
+		// 		}
+		// 		if strings.Contains(c.Request().URL.Path, "/query") {
+		// 			return true
+		// 		}
+		// 		return false
+		// 	},
+		// }),
 		i.Am.AuthMiddleware,
 	)
 
