@@ -78,7 +78,7 @@ func (i *InitRouter) InitRouting(cfg *config.Config) (*echo.Echo, error) {
 	e.HTTPErrorHandler = customHTTPErrorHandler
 
 	e.GET("/healthcheck", func(c echo.Context) error {
-		return c.String(http.StatusOK, "New deployment test")
+		return c.String(http.StatusOK, "OK")
 	})
 	e.GET("/csrf-cookie", i.Ch.CsrfHandler())
 	e.POST("/login", i.Lh.LoginHandler())
