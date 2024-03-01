@@ -56,6 +56,7 @@ func (i *InitRouter) InitRouting(cfg *config.Config) (*echo.Echo, error) {
 			},
 		}),
 		middleware.CSRFWithConfig(middleware.CSRFConfig{
+			TokenLookup:    "cookie:_csrf",
 			CookiePath:     "/",
 			CookieSecure:   true,
 			CookieDomain:   cookieDomain,
