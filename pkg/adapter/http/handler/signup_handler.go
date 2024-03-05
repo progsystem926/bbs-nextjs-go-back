@@ -42,7 +42,7 @@ func (s *SignUpHandler) SignUpHandler() echo.HandlerFunc {
 		}
 
 		return c.JSON(http.StatusOK, echo.Map{
-			"id": userId,
+			"userId": userId,
 		})
 	}
 }
