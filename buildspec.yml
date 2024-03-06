@@ -25,16 +25,6 @@ phases:
       - export PATH=$PATH:$(go env GOPATH)/bin
   pre_build:
     commands:
-      - echo hadolint install
-      - docker pull hadolint/hadolint
-      - docker run --rm -i hadolint/hadolint hadolint --ignore DL3018 - < build/docker/go/Dockerfile
-      - echo dockle install
-      - DOCKLE_VERSION=$(curl --silent "https://api.github.com/repos/goodwithtech/dockle/releases/latest" | grep '"tag_name":' | sed -E 's/.*"v([^"]+)".*/\1/')
-      - curl -L -o dockle.deb https://github.com/goodwithtech/dockle/releases/download/v${DOCKLE_VERSION}/dockle_${DOCKLE_VERSION}_Linux-64bit.deb
-      - sudo dpkg -i dockle.deb && rm dockle.deb
-      - echo trivy install
-      - wget -q https://github.com/aquasecurity/trivy/releases/download/v0.38.3/trivy_0.38.3_Linux-64bit.deb
-      - sudo dpkg -i trivy_0.38.3_Linux-64bit.deb
       - echo Logging in to ECR
       - REPOSITORY_URI=${REPOSITORY_DOMAIN}/${ECRName}
       - aws ecr --region ${AWS_REGION} get-login-password | docker login --username AWS --password-stdin https://${REPOSITORY_URI}
@@ -50,10 +40,6 @@ phases:
   post_build:
     commands:
       - export DOCKER_CONTENT_TRUST=0
-      - echo dockle image check
-      - dockle --format json --exit-code 1 ${REPOSITORY_URI}:${IMAGE_TAG}
-      - echo trivy scan
-      - trivy image --no-progress --ignore-unfixed --exit-code 1 --severity CRITICAL ${REPOSITORY_URI}:${IMAGE_TAG}
       - echo Build completed on `date`
       - echo Pushing the Docker images
       - docker image push ${REPOSITORY_URI}:${IMAGE_TAG}

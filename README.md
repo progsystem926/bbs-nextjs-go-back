@@ -11,8 +11,8 @@ https://bbs-nextjs-go.click
 
 ### 使い方
 
-テストユーザとして、下記のアカウントでログインできます。  
-Email: test1@example.com  
+テストユーザとして、下記のアカウントでログインできます。<br>
+Email: test1@example.com<br>
 Password: password1
 
 ## 使用技術一覧
