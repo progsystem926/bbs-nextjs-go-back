@@ -30,9 +30,9 @@ Password: password1
 - CSS フレームワーク: Tailwind CSS / daisyUI
 - 主要パッケージ: React Hook Form / Recoil / react-cookie / GraphQL Code Generator / graphql-request / Tanstack Query
 
-**インフラ:** AWS(Route53 / Certificate Manager/ Systems Manager Parameter Store / ALB / VPC / ECR / ECS Fargate / RDS MySQL / S3) / Nginx
+**インフラ:** AWS(Route53) / GCP(Cloud Run / Cloud SQL) / Nginx
 
-**CI / CD:** GitHub Actions / AWS(CodePipeline)
+**CI / CD:** GitHub Actions / GCP(Cloud Build)
 
 **環境構築:** Docker / Docker Compose
 
